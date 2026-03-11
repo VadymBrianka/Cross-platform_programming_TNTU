@@ -13,29 +13,14 @@ const App = () => {
   const [cardNumber, setCardNumber] = useState('');
   const [validationResult, setValidationResult] = useState(null);
 
-  // Функція для форматування введення (додає пробіл кожні 4 цифри)
   const handleInputChange = (text) => {
-    // Видаляємо всі символи, крім цифр
-    const cleaned = text.replace(/\D/g, '');
-    
-    // Обмежуємо довжину до 16 цифр
-    const truncated = cleaned.slice(0, 16);
-
-    // Додаємо пробіли для зручності читання
-    let formatted = '';
-    for (let i = 0; i < truncated.length; i++) {
-      if (i > 0 && i % 4 === 0) {
-        formatted += ' ';
-      }
-      formatted += truncated[i];
-    }
+    const truncated = text.replace(/\D/g, '').slice(0, 16);
+    const formatted = truncated.replace(/(\d{4})(?=\d)/g, '$1 ');
 
     setCardNumber(formatted);
-    // Скидаємо результат при зміні тексту
     setValidationResult(null); 
   };
 
-  // Алгоритм Луна для валідації картки
   const validateLuhn = (number) => {
     let sum = 0;
     let isSecond = false;
@@ -59,9 +44,9 @@ const App = () => {
 
   const handleValidate = () => {
     Keyboard.dismiss();
-    const rawNumber = cardNumber.replace(/\s/g, ''); // Видаляємо пробіли для перевірки
+    const rawNumber = cardNumber.replace(/\s/g, ''); 
 
-    if (rawNumber.length !== 16) {
+    if (!/^\d{16}$/.test(rawNumber)) {
       setValidationResult({
         isValid: false,
         message: 'Номер картки має містити рівно 16 цифр.',
@@ -90,7 +75,7 @@ const App = () => {
           keyboardType="numeric"
           value={cardNumber}
           onChangeText={handleInputChange}
-          maxLength={19} // 16 цифр + 3 пробіли
+          maxLength={19} 
         />
 
         <TouchableOpacity style={styles.button} onPress={handleValidate}>
@@ -118,6 +103,7 @@ const App = () => {
     </SafeAreaView>
   );
 };
+
 
 const styles = StyleSheet.create({
   container: {
