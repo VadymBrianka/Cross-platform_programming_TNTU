@@ -2,6 +2,7 @@ import React from 'react';
 import { SafeAreaView, ScrollView, StyleSheet, Text, View } from 'react-native';
 import LoginScreen from './LoginScreen';
 import TimerScreen from './TimerScreen';
+import CalculatorScreen from './CalculatorScreen';
 
 export default function App() {
   return (
@@ -14,6 +15,11 @@ export default function App() {
         
         <Text style={styles.header}>Індивідуальне завдання:</Text>
         <TimerScreen />
+
+        <View style={styles.divider} />
+        
+        <Text style={styles.header}>Індивідуальне (Варіант 2): Калькулятор</Text>
+        <CalculatorScreen />
       </ScrollView>
     </SafeAreaView>
   );
